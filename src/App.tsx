@@ -74,7 +74,7 @@ export const App: React.FC = () => {
   const distressedBoat = boats.find((b) => b.isDistressed || b.id === 'BOAT-07');
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col font-sans select-none overflow-x-hidden">
+    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col font-sans overflow-x-hidden">
       {/* Automated Stepper Demo Banner */}
       <DemoProgressBar />
 

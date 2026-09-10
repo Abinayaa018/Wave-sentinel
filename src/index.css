@@ -16,8 +16,8 @@
     background-color: var(--bg-navy);
     color: #f1f5f9;
     font-family: 'Inter', system-ui, sans-serif;
-    user-select: none;
-    overflow: hidden;
+    overflow-y: auto;
+    overflow-x: hidden;
   }
 }
 
