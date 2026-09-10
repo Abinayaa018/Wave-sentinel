@@ -4,6 +4,20 @@ export type PacketStatus = 'CREATED' | 'TRANSMITTING' | 'HOP_FORWARDING' | 'DELI
 export type SARStatus = 'STANDBY' | 'DISPATCHED' | 'EN_ROUTE' | 'AT_SCENE' | 'RESCUING' | 'RESOLVED';
 export type ScenarioId = 'NORMAL' | 'ROUGH_SEA' | 'MAN_OVERBOARD' | 'CAPSIZING' | 'MANUAL_SOS' | 'FULL_EMERGENCY';
 
+export type EmergencyProgressionStep =
+  | 'NORMAL'
+  | 'SHAKING'
+  | 'SENSOR_DETECTION'
+  | 'AI_THINKING'
+  | 'DISTRESS_CONFIRMED'
+  | 'SEARCHING_NEARBY'
+  | 'LORA_LINK_FOUND'
+  | 'PACKET_RELAY'
+  | 'COAST_GUARD_ALERT'
+  | 'SAR_DISPATCH'
+  | 'RESCUE_IN_PROGRESS'
+  | 'RESCUE_COMPLETED';
+
 export interface GyroscopeData {
   roll: number; // degrees (-90 to +90)
   pitch: number; // degrees (-90 to +90)
@@ -50,15 +64,16 @@ export interface AIAnalysisResult {
   classification: DistressClassification;
   reasons: string[]; // Explainable AI reasons
   history: number[]; // Trend over last N ticks
+  thinkingStep?: string; // Current AI process status message
 }
 
 export interface BoatState {
-  id: string; // e.g. 'BOAT-01'
+  id: string; // e.g. 'BOAT-07'
   name: string;
   isDistressed: boolean;
   sensors: BoatSensors;
   aiAnalysis: AIAnalysisResult;
-  meshRangeKm: number; // e.g. 8 km
+  meshRangeKm: number; // e.g. 9 km
   isOnline: boolean;
 }
 
@@ -75,7 +90,7 @@ export interface DistressPacket {
   id: string;
   sourceBoatId: string;
   destNodeId: string; // 'CG-HQ'
-  route: string[]; // e.g. ['BOAT-03', 'BOAT-02', 'BOAT-01', 'CG-HQ']
+  route: string[]; // e.g. ['BOAT-07', 'BOAT-05', 'BOAT-02', 'BOAT-01', 'CG-HQ']
   currentHopIndex: number;
   ttl: number;
   hopsCount: number;
@@ -88,7 +103,7 @@ export interface DistressPacket {
 }
 
 export interface CoastGuardDispatch {
-  vesselId: string; // 'CG-07'
+  vesselId: string; // 'CG-07 (INS SAMUDRA)'
   status: SARStatus;
   targetBoatId: string | null;
   targetLocation: { latitude: number; longitude: number } | null;
